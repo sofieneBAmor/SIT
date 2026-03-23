@@ -48,6 +48,31 @@
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ---- Light Mode Theme ---- */
+[data-theme="light"] {
+  --bg-dark: #f0f4f8;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
+  --bg-surface: #eaeff6;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  --border: rgba(15,23,42,0.09);
+  --border-hover: rgba(99,102,241,0.45);
+
+  --gradient-bg: linear-gradient(135deg, #eef2ff 0%, #e0f2fe 50%, #eef2ff 100%);
+
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.09);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.12);
+  --shadow-glow: 0 0 30px rgba(99,102,241,0.15);
+
+  --ghost-bg: rgba(15,23,42,0.05);
+  --ghost-bg-hover: rgba(15,23,42,0.09);
+}
+
 /* ---- Reset & Base ---- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -2501,4 +2526,186 @@ select, input, textarea { font-family: inherit; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .trusted-logos { gap: 20px; }
   .back-to-top { bottom: 20px; right: 20px; }
+}
+
+/* =========================================
+   THEME TOGGLE BUTTON
+   ========================================= */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+.theme-toggle:hover {
+  background: var(--bg-card-hover);
+  color: var(--primary);
+  border-color: var(--border-hover);
+  transform: rotate(15deg);
+}
+.theme-toggle svg { width: 18px; height: 18px; }
+.theme-toggle .icon-moon { display: none; }
+
+/* =========================================
+   LIGHT MODE OVERRIDES
+   ========================================= */
+
+/* Navbar */
+[data-theme="light"] .navbar.scrolled {
+  background: rgba(240,244,248,0.92);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+}
+[data-theme="light"] .nav-links {
+  background: rgba(240,244,248,0.97);
+}
+[data-theme="light"] .nav-link:hover,
+[data-theme="light"] .nav-link.active {
+  background: rgba(15,23,42,0.05);
+}
+[data-theme="light"] .nav-logo img {
+  filter: none;
+}
+
+/* Buttons */
+[data-theme="light"] .btn-ghost {
+  background: rgba(15,23,42,0.05);
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+[data-theme="light"] .btn-ghost:hover {
+  background: rgba(15,23,42,0.09);
+}
+
+/* Hero */
+[data-theme="light"] .hero {
+  background: linear-gradient(135deg, #eef2ff 0%, #e0f2fe 60%, #f0fdf4 100%);
+}
+[data-theme="light"] .hero-orb {
+  opacity: 0.25;
+}
+[data-theme="light"] .hero-grid {
+  opacity: 0.3;
+}
+[data-theme="light"] .hero-badge {
+  background: rgba(99,102,241,0.1);
+  border-color: rgba(99,102,241,0.2);
+  color: var(--primary-dark);
+}
+
+/* Cards & surfaces with hardcoded rgba whites */
+[data-theme="light"] .service-card,
+[data-theme="light"] .tab-btn,
+[data-theme="light"] .real-card,
+[data-theme="light"] .equipe-card,
+[data-theme="light"] .news-card,
+[data-theme="light"] .testi-card,
+[data-theme="light"] .contact-form-wrap,
+[data-theme="light"] .stat-card,
+[data-theme="light"] .mission-card,
+[data-theme="light"] .apropos-quote,
+[data-theme="light"] .process-step,
+[data-theme="light"] .partner-card,
+[data-theme="light"] .content-card {
+  background: #ffffff;
+  border-color: rgba(15,23,42,0.08);
+}
+[data-theme="light"] .service-card:hover,
+[data-theme="light"] .equipe-card:hover,
+[data-theme="light"] .news-card:hover,
+[data-theme="light"] .partner-card:hover,
+[data-theme="light"] .content-card:hover {
+  background: #f8fafc;
+}
+
+/* Tab active */
+[data-theme="light"] .tab-btn.active {
+  background: rgba(99,102,241,0.1);
+  color: var(--primary);
+}
+[data-theme="light"] .tab-btn:hover {
+  background: rgba(15,23,42,0.05);
+}
+
+/* Sections alternate bg */
+[data-theme="light"] .section-alt,
+[data-theme="light"] .stats-section,
+[data-theme="light"] .trusted-section,
+[data-theme="light"] .temoignages {
+  background: var(--bg-surface);
+}
+
+/* Footer */
+[data-theme="light"] .footer {
+  background: #1e293b;
+}
+
+/* Trusted logos */
+[data-theme="light"] .trusted-logo img {
+  filter: brightness(0) invert(0) opacity(0.6);
+}
+
+/* Nav toggle bars */
+[data-theme="light"] .nav-toggle span {
+  background: var(--text-primary);
+}
+
+/* Form inputs */
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group select,
+[data-theme="light"] .form-group textarea {
+  background: #f8fafc;
+  border-color: rgba(15,23,42,0.12);
+  color: var(--text-primary);
+}
+[data-theme="light"] .form-group input::placeholder,
+[data-theme="light"] .form-group textarea::placeholder {
+  color: var(--text-muted);
+}
+[data-theme="light"] .form-group input:focus,
+[data-theme="light"] .form-group select:focus,
+[data-theme="light"] .form-group textarea:focus {
+  background: #ffffff;
+  border-color: var(--primary);
+}
+
+/* Timeline dot */
+[data-theme="light"] .tl-dot {
+  border-color: rgba(99,102,241,0.3);
+}
+
+/* Hero floating cards — keep dark bg + white text in light mode */
+[data-theme="light"] .card-float {
+  background: #1e293b;
+  border-color: rgba(255,255,255,0.1);
+  color: #ffffff;
+}
+[data-theme="light"] .card-float .score-val,
+[data-theme="light"] .card-float .score-label,
+[data-theme="light"] .card-float .learners-count {
+  color: #ffffff;
+}
+[data-theme="light"] .card-float .score-label {
+  color: rgba(255,255,255,0.7);
+}
+
+/* Back to top */
+[data-theme="light"] .back-to-top {
+  background: var(--gradient-primary);
+  border-color: transparent;
+}
+
+/* Mobile nav override */
+@media (max-width: 768px) {
+  [data-theme="light"] .nav-links {
+    background: rgba(240,244,248,0.98);
+  }
 }

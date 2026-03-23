@@ -7,6 +7,32 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- Init Lucide Icons ----
   if (typeof lucide !== 'undefined') lucide.createIcons();
 
+  // ---- Theme Toggle (Light / Dark) ----
+  const html = document.documentElement;
+  const themeToggleBtn = document.getElementById('themeToggle');
+
+  function applyTheme(theme) {
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('sit-theme', theme);
+    // Swap icon
+    // Show sun in dark mode (click to go light), moon in light mode (click to go dark)
+    if (themeToggleBtn) {
+      themeToggleBtn.querySelector('.icon-sun').style.display = theme === 'light' ? 'none' : 'block';
+      themeToggleBtn.querySelector('.icon-moon').style.display = theme === 'light' ? 'block' : 'none';
+    }
+  }
+
+  // Load saved theme or default to dark
+  const savedTheme = localStorage.getItem('sit-theme') || 'light';
+  applyTheme(savedTheme);
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      applyTheme(current === 'light' ? 'dark' : 'light');
+    });
+  }
+
   // ---- Navbar scroll effect ----
   const navbar = document.getElementById('navbar');
   const navLinks = document.querySelectorAll('.nav-link');
