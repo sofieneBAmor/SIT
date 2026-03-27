@@ -131,6 +131,35 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial AOS check after short delay (elements already declared above)
   setTimeout(animateOnScroll, 100);
 
+  // ---- Video Modal ----
+  const videoModal  = document.getElementById('videoModal');
+  const videoFrame  = document.getElementById('videoModalFrame');
+  const videoClose  = videoModal && videoModal.querySelector('.video-modal-close');
+  const videoBackdrop = videoModal && videoModal.querySelector('.video-modal-backdrop');
+
+  function openVideoModal(videoUrl) {
+    // Si la vidéo ne peut pas être intégrée (erreur 153), ouvrir dans un nouvel onglet
+    window.open(videoUrl, '_blank', 'noopener,noreferrer');
+  }
+
+  function closeVideoModal() {
+    if (!videoModal) return;
+    videoModal.classList.remove('open');
+    videoFrame.src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.contenu-item-video').forEach(item => {
+    item.addEventListener('click', () => openVideoModal(item.dataset.video));
+  });
+
+  if (videoClose)   videoClose.addEventListener('click', closeVideoModal);
+  if (videoBackdrop) videoBackdrop.addEventListener('click', closeVideoModal);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeVideoModal();
+  });
+
   // ---- Hero counter animation ----
   const heroCounters = document.querySelectorAll('.hero .stat-num[data-target]');
   let heroCountersAnimated = false;
@@ -280,18 +309,27 @@ document.addEventListener('DOMContentLoaded', () => {
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const btn = form.querySelector('button[type="submit"]');
-      btn.innerHTML = '<svg class="spinner" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="31.4" stroke-dashoffset="10"/></svg> Envoi en cours...';
-      btn.disabled = true;
 
-      // Simulate sending
-      setTimeout(() => {
-        showToast('Votre message a bien été envoyé ! Nous vous répondrons sous 24h.', 'success');
-        form.reset();
-        btn.innerHTML = '<i data-lucide="send"></i> Envoyer ma demande';
-        btn.disabled = false;
-        if (typeof lucide !== 'undefined') lucide.createIcons();
-      }, 1800);
+      const nom        = form.querySelector('[name="nom"]').value.trim();
+      const email      = form.querySelector('[name="email"]').value.trim();
+      const org        = form.querySelector('[name="organisation"]').value.trim();
+      const tel        = form.querySelector('[name="telephone"]').value.trim();
+      const projet     = form.querySelector('[name="projet"]').value.trim();
+      const message    = form.querySelector('[name="message"]').value.trim();
+
+      const subject = encodeURIComponent('Nouvelle demande via le site SIT eLearning');
+      const body = encodeURIComponent(
+        `Nom : ${nom}\n` +
+        `Email : ${email}\n` +
+        (org  ? `Organisation : ${org}\n`  : '') +
+        (tel  ? `Téléphone : ${tel}\n`    : '') +
+        (projet ? `Type de projet : ${projet}\n` : '') +
+        `\nMessage :\n${message}`
+      );
+
+      window.location.href = `mailto:info@sit.com.tn?subject=${subject}&body=${body}`;
+
+      showToast('Votre client email va s\'ouvrir avec le message pré-rempli.', 'success');
     });
   }
 
